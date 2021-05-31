@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<db.entity-mappings ptype="MONOLITH" ppkg="db.entity" epkg="domain" v="5.4.3" rws="_16221346751622" Pws="_16221346751622" cws="_16221346751622" persistenceUnitName="DEFAULT_PU" sm="false" xs="false" id="_16221346751611" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <db.entity compositePrimaryKeyClass="PokemonPK" abs="false" class="Pokemon" v="true" jbn="false" xre="false" m="false" rootElement="_16221346751611" id="_16221346826643">
+        <ath>Jonathan</ath>
+        <attributes>
+            <basic attribute-type="String" v="true" xvt="" name="name" id="_16221346950406">
+                <xwm/>
+                <xm/>
+            </basic>
+            <basic attribute-type="String" v="true" xvt="" name="evolution" id="_16221346963897">
+                <xwm/>
+                <xm/>
+            </basic>
+            <basic attribute-type="String" v="true" xvt="" name="notes" id="_162213516720813">
+                <xwm/>
+                <xm/>
+            </basic>
+            <id attribute-type="Integer" v="true" xvt="" name="id" id="_16221346827044">
+                <xwm/>
+                <xm/>
+                <column unique="true" nullable="true" insertable="true" updatable="true" precision="0"/>
+                <generated-value strategy="DEFAULT"/>
+            </id>
+        </attributes>
+        <nq e="false" name="Pokemon.findAll">
+            <query>Select e from Pokemon e</query>
+        </nq>
+        <nq e="false" name="Pokemon.findByName">
+            <query>Select p from Pokemon p where p.name=:name</query>
+        </nq>
+        <nq e="false" name="Pokemon.findByEvolution">
+            <query>Select p from Pokemon p where p.evolution=:evolution</query>
+        </nq>
+        <nq e="false" name="Pokemon.findByAttribute2">
+            <query>Select p from Pokemon p where p.attribute2=:attribute2</query>
+        </nq>
+        <nq e="false" name="Pokemon.findByAttribute3">
+            <query>Select p from Pokemon p where p.attribute3=:attribute3</query>
+        </nq>
+        <nq e="false" name="Pokemon.findByAttribute4">
+            <query>Select p from Pokemon p where p.attribute4=:attribute4</query>
+        </nq>
+        <nq e="false" name="Pokemon.findByAttribute5">
+            <query>Select p from Pokemon p where p.attribute5=:attribute5</query>
+        </nq>
+        <nq e="false" name="Pokemon.findByAttribute6">
+            <query>Select p from Pokemon p where p.attribute6=:attribute6</query>
+        </nq>
+        <nq e="false" name="Pokemon.findByNotes">
+            <query>Select p from Pokemon p where p.notes=:notes</query>
+        </nq>
+    </db.entity>
+    <wsl>
+        <ws n="Main" id="_16221346751622">
+            <i ref="_16221346826643" x="327" y="216"/>
+        </ws>
+    </wsl>
+</db.entity-mappings>
