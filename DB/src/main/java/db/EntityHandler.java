@@ -20,12 +20,12 @@ import javax.persistence.TypedQuery;
  *
  * @author Jonathan
  */
-public class HandleEntity<T> {
+public class EntityHandler<T> {
     
     public static EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
     private Class<T> entityClass;
 
-    public HandleEntity(Class<T> entityClass) {
+    public EntityHandler(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 

@@ -2,9 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HTML testfile</title>
+    <title>FIND YOUR POKEMON</title>
 </head>
-<body>
-<div> test test test test </div>
-</body>
+<body><center>
+<div> Find your POKEMON! (1-150 pokemon in database) </div>
+
+
+<form name="pokeSearch" method="GET" action="pokemon.html">
+    Pokemon ID: <input type="text" name="index" id="index"/> <br/>
+    <input type="submit" value="Search for pokemon" />
+</form>
+
+<div>Create your Own POKEMON!</div>
+<form name="pkmnCreate" method="GET" action="createPkmn">
+    Pokemon Name:
+    <input type="text" name="pkname" id="pkname"/> <br/>
+    Pokemon Evolution:
+    <input type="text" name="pkevo" id="pkevo"><br/>
+    <input type="submit" value="Add new Pokemon">
+</form>
+</center></body>
 </html>
