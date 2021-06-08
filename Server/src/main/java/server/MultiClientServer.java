@@ -9,6 +9,7 @@ import db.entity.Pokemon;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,6 +44,7 @@ public class MultiClientServer {
     }
 
     private static void handleConnection(Socket client){
+        URLDecoder decode = new URLDecoder();
         try {
 
             System.out.println("Client:"+client.getInetAddress()+" connected");
@@ -77,6 +79,38 @@ public class MultiClientServer {
                 String htmlTest = getHtmlFile("start");
                 sendResponse(toClient, htmlTest, "text/html");
 
+            }else if(url.split("\\?")[0].equals("/createPkmn")){
+                String[] params = url.split("\\?")[1].split("&");
+                String name = params[0].replace("pkname=","");
+                String evo = params[1].replace("pkevo=","");
+                int curLen = EH.getAll().size();
+                int id = curLen+1;
+                boolean notUnique = true;
+                while(notUnique){
+                    notUnique = doesIdExist(id);
+                    if(notUnique==false){
+                        break;
+                    }else{
+                    id++;}
+                }
+                Pokemon pkmn = new Pokemon(id,name,evo);
+                EH.create(pkmn);
+                String success = "<header><center>Successfully Added pokemon:"+pkmn.getName()+" with ID "+pkmn.getId()+"</center></header><br><br><br>" +
+                        "<center><button type=\"button\" onclick=\"goBack()\">Back</a><center>" +
+                        "<script> function goBack() {window.history.back();}</script>";
+                sendResponse(toClient, success, "text/html");
+            }
+            else if(url.split("\\?")[0].equals("/deletePkmn")){
+                String[] params = url.split("\\?")[1].split("&");
+                String idStr = params[0].replace("pkdelid=","");
+                int id = Integer.parseInt(idStr);
+                Pokemon pkmn =(Pokemon) EH.findById(id);
+                EH.remove(pkmn);
+                String success = "<header><center>Successfully deleted pokemon:"+pkmn.getName()+" with ID "+pkmn.getId()+"</center></header><br><br><br>" +
+                                    "<center><button type=\"button\" onclick=\"goBack()\">Back</a><center>" +
+                                    "<script> function goBack() {window.history.back();}</script>";
+
+                sendResponse(toClient, success, "text/html");
             }
             else{
                 notFound(toClient);
@@ -96,6 +130,15 @@ public class MultiClientServer {
         System.out.println(e);
         }
 
+    }
+
+    private static boolean doesIdExist(int id) {
+        Pokemon pkmn = (Pokemon)EH.findById(id);
+        if(pkmn != null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private static void sendFileResponse(OutputStream outputToClient, String filename) throws IOException {
@@ -151,36 +194,6 @@ public class MultiClientServer {
     }
 
 
-  /* private static void readAndSaveMsg(BufferedReader fromClient) throws IOException {
-        List<String> tempList = new ArrayList<>();
-
-        while (true) {
-            String line = fromClient.readLine();
-            System.out.println(line);
-            if(!line.isEmpty() && line != "" && line != "\n" && line.length() > 0){
-                tempList.add(line);
-            }
-            if (line.isEmpty() || line == null) {
-                break;
-            }
-
-
-        }
-        String[] header = tempList.get(0).split(" ");
-        System.out.println("header");
-        for (String string : header) {
-            System.out.println(string);
-        }
-        String id = header[1];
-        if(id != "/" && !id.isBlank() && id != ""){
-            System.out.println("id is not /");
-            int intId = Integer.parseInt(id);
-            Pokemon pkmn = (Pokemon)EH.findById(intId);
-            synchronized(requests){
-                requests.add(pkmn.toString());
-                }
-        }
-        }*/
 
 
         private static String getHtmlFile(String filename){
@@ -228,7 +241,6 @@ public class MultiClientServer {
                 url = line.split(" ")[1];}
             if(line.startsWith("POST")){
                 System.out.println("POST REQUEST");
-
                 url = line.split(" ")[1];
                 var splitted = line.split(" ");
                 for (String str:splitted

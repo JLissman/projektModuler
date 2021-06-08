@@ -13,7 +13,6 @@ import javax.persistence.Id;
 public class Pokemon {
 
     @Id
-    @GeneratedValue
     @Column(unique = true)
     private Integer id;
     @Basic
@@ -25,7 +24,8 @@ public class Pokemon {
     public Pokemon() {
     }
 
-    public Pokemon(String name, String evolution) {
+    public Pokemon(Integer id,String name, String evolution) {
+        this.id = id;
         this.name = name;
         this.evolution = evolution;
     }
