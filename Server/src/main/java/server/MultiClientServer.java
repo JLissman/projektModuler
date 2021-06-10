@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -62,7 +63,7 @@ public class MultiClientServer {
             if (url.equals("/cat.jpg")){
                 sendFileResponse(toClient, "cat.jpg");
 
-            }else if(url.equals("/allPkmn.html")){
+            }else if(url.equals("/allPkmn")){
                 List<Pokemon> pkmn = entityHandler.getAll();
 
                 Gson gson = new Gson();
@@ -83,6 +84,7 @@ public class MultiClientServer {
                 sendResponse(toClient, htmlTest, "text/html");
 
             }else if(url.split("\\?")[0].equals("/createPkmn")){
+
                 String[] params = url.split("\\?")[1].split("&");
                 String name = params[0].replace("pkname=","");
                 String evo = params[1].replace("pkevo=","");
@@ -96,7 +98,9 @@ public class MultiClientServer {
                     }else{
                     id++;}
                 }
-                Pokemon pkmn = new Pokemon(id,name,evo);
+                String decodeName = java.net.URLDecoder.decode(name, StandardCharsets.UTF_8);
+                String decodeEvo = java.net.URLDecoder.decode(evo, StandardCharsets.UTF_8);
+                Pokemon pkmn = new Pokemon(id,decodeName,decodeEvo);
                 entityHandler.create(pkmn);
                 String success = addString(pkmn);
                 sendResponse(toClient, success, "text/html");

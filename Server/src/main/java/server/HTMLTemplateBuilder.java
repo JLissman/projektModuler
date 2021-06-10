@@ -43,7 +43,7 @@ public class HTMLTemplateBuilder {
                 "<div id=\"pkmnid\">Pokedex index:"+pkmn.getId()+"</div>"+
                 "<div id =\"pkmnname\">Pokemon name:"+pkmn.getName()+"</div>"+
                 "<div id =\"pkmnevo\">Pokemon evolution:"+pkmn.getEvolution()+" </div>"+
-                "<img src=\"https://img.pokemondb.net/artwork/large/"+pkmn.getName().toLowerCase()+".jpg\" style=\"width:50%;height:50%\"></img>"+
+                "<img src=\"https://img.pokemondb.net/artwork/large/"+pkmn.getName().toLowerCase()+".jpg\" style='height: 150px; width: 150px'></img>"+
                 "</body>";
         if(prevPkmn != null){
             finalString = finalString +"<form method=\"POST\" action=\"/pokemon.html?index="+prevPkmn.getId()+"\">" +
